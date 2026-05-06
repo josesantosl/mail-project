@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mail.server.view.ServerViewController">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <Label text="Mail Server - Event Log" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+    <ListView fx:id="logListView" VBox.vgrow="ALWAYS"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="startButton" text="Start Server" onAction="#onStart"/>
+        <Button fx:id="stopButton" text="Stop Server" onAction="#onStop" disable="true"/>
+    </HBox>
+</VBox>
