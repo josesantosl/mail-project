@@ -1,6 +1,6 @@
 # Compiled output
 target/
-
+.idea
 # IntelliJ
 .idea/
 *.iml
