@@ -1,0 +1,6 @@
+com/mail/client/view/ClientViewController$1.class
+com/mail/client/model/ClientModel.class
+com/mail/client/view/ClientViewController.class
+module-info.class
+com/mail/client/ClientApp.class
+com/mail/client/controller/ClientController.class
