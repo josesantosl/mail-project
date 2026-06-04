@@ -78,16 +78,12 @@ public class ServerController {
     }
 
     private void handleClient(Socket socket) {
-        String clientAddr = socket.getRemoteSocketAddress().toString();
-        model.addLog("Connection opened from " + clientAddr);
-
         try (
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true)
         ) {
             String requestJson = in.readLine();
             if (requestJson == null) {
-                model.addLog("Empty request from " + clientAddr);
                 return;
             }
 
@@ -96,10 +92,9 @@ public class ServerController {
             out.println(gson.toJson(response));
 
         } catch (Exception e) {
-            model.addLog("Error handling client " + clientAddr + ": " + e.getMessage());
+            model.addLog("Error: " + e.getMessage());
         } finally {
             try { socket.close(); } catch (IOException ignored) {}
-            model.addLog("Connection closed from " + clientAddr);
         }
     }
 
@@ -115,7 +110,7 @@ public class ServerController {
     private Response handleLogin(Request request) {
         String user = request.getUser();
         if (model.accountExists(user)) {
-            model.addLog("LOGIN successful: " + user);
+            model.addLog("Client connected: " + user);
             return Response.ok("Login successful");
         } else {
             model.addLog("LOGIN failed: " + user + " (account not found)");
@@ -135,7 +130,9 @@ public class ServerController {
         }
 
         List<Email> emails = model.getEmailsSince(user, since);
-        model.addLog("FETCH for " + user + ": " + emails.size() + " email(s)");
+        if (!emails.isEmpty()) {
+            model.addLog("FETCH for " + user + ": " + emails.size() + " email(s)");
+        }
         return Response.ok("Fetched " + emails.size() + " email(s)", emails);
     }
 
