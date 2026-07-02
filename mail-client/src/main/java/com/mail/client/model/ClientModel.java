@@ -8,10 +8,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/**
- * Client model: holds inbox, user email, and connection status.
- * Uses JavaFX observable properties for the Observer pattern.
- */
 public class ClientModel {
 
     private final StringProperty userEmail = new SimpleStringProperty("");
@@ -21,8 +17,6 @@ public class ClientModel {
 
     // Track the latest email date we've seen, for incremental fetch
     private String lastFetchTimestamp = null;
-
-    // --- Properties ---
 
     public StringProperty userEmailProperty() { return userEmail; }
     public String getUserEmail() { return userEmail.get(); }
@@ -44,8 +38,7 @@ public class ClientModel {
     // --- Inbox operations ---
 
     public void addEmails(java.util.List<Email> emails) {
-        inbox.addAll(emails);
-        // Update last fetch timestamp to the most recent email's date
+        inbox.addAll(0, emails);
         for (Email e : emails) {
             String ts = e.getDate().toString();
             if (lastFetchTimestamp == null || ts.compareTo(lastFetchTimestamp) > 0) {
